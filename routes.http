@@ -1,0 +1,19 @@
+GET http://localhost:3000/produtos
+
+###
+
+POST http://localhost:3000/produto 
+
+###
+
+PUT  http://localhost:3000/produto/
+Content-Type: 'application/json'
+
+{
+     "nome": "Nike Atualizado",
+     "modelo": "Air Force 2",
+     "preço": 2800
+}
+
+###
+DELETE http://localhost:3000/produto/e4132dce-ca52-4c6b-9ede-03a45c9a803f

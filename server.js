@@ -1,26 +1,22 @@
 // Import the framework and instantiate it
 import Fastify from 'fastify'
+import { DataBaseTemp } from "./db.list.js";
 
-const fastify = Fastify({
-  logger: true
+const server = Fastify({
+    logger: true
 })
+const db = new DataBaseTemp();
 const HOST = 'localhost'; //127.0.0.1
 
-const PORT = 5000;
+const PORT = 3000;
 
 // Declare a route
-fastify.get('/', async (req, res) => {
+server.get('/', async (req, res) => {
     res.send(' Servidor no ar!')
 });
 
 
-// Run the server!
-try {
-  await fastify.listen({ port: 3000 })
-} catch (err) {
-  fastify.log.error(err)
-  process.exit(1)
-}
+
 
 server.get(`/produtos`, (req, res) => {
     let produtos = db.listarTodos()
@@ -32,9 +28,9 @@ server.get(`/produtos`, (req, res) => {
 })
 
 server.get(`/produto/:id`, (req, res) => {
-let idParam = req.params.id
-let produto = db.listarPorId(idParam)
-return res.status(200).send(produto)
+    let idParam = req.params.id
+    let produto = db.listarPorId(idParam)
+    return res.status(200).send(produto)
 })
 
 server.post('/produto', (req, res) => {
@@ -56,8 +52,8 @@ server.put('/produto/:id', (req, res) => {
 server.listen({
     port: PORT,
     host: HOST
-    })
+})
 
-.then(() => console.log(`Servidor rodando em http://${HOST}:${PORT}`))
-.catch(err => console.log(`Erro ao subir o servidor: ${err}`))
+    .then(() => console.log(`Servidor rodando em http://${HOST}:${PORT}`))
+    .catch(err => console.log(`Erro ao subir o servidor: ${err}`))
 
